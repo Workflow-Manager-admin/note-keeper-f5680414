@@ -1,0 +1,28 @@
+<app-topbar title="Notes"></app-topbar>
+<div class="notes-app-container">
+  <app-notes-list
+    [notes]="notes"
+    [selectedNoteId]="selectedNoteId"
+    (selectNote)="onSelectNote($event)"
+    (createNote)="onCreateNote()"
+    (search)="onSearch($event)">
+  </app-notes-list>
+  <div class="main-content">
+    <ng-container *ngIf="loading">
+      <div class="loader">Loading...</div>
+    </ng-container>
+    <ng-container *ngIf="!loading">
+      <ng-container *ngIf="selectedNote; else promptSelect">
+        <app-note-editor
+          [note]="selectedNote"
+          [editing]="isEditing"
+          (save)="onSaveNote($event)"
+          (cancel)="onCancelEdit()"
+          (delete)="onDeleteNote()"></app-note-editor>
+      </ng-container>
+      <ng-template #promptSelect>
+        <div class="empty-msg">Select a note or create a new one!</div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

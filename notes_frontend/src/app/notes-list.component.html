@@ -1,0 +1,15 @@
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <span>Notes</span>
+    <button class="accent" (click)="onCreate()" aria-label="Create Note">+</button>
+  </div>
+  <input class="search" [(ngModel)]="searchInput" (input)="onSearchChange()" placeholder="Search notes..." />
+  <ul class="notes-list">
+    <li *ngFor="let note of notes"
+        [class.selected]="note.id === selectedNoteId"
+        (click)="onSelect(note.id)">
+      <div class="note-title">{{ note.title }}</div>
+      <div class="note-preview">{{ note.content | slice:0:40 }}{{ note.content.length > 40 ? '...' : '' }}</div>
+    </li>
+  </ul>
+</aside>

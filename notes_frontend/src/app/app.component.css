@@ -1,0 +1,20 @@
+html, body {
+  width: 100vw;
+  height: 100vh;
+  background: #f7f9fc;
+  color: #222;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: inherit;
+}
+a {
+  color: #1976d2;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
