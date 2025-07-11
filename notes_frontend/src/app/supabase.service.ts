@@ -7,14 +7,22 @@ const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZ
 // PUBLIC_INTERFACE
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  private supabase: SupabaseClient | null = null;
+  private isPrerender: boolean;
 
   constructor() {
-    this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Detect if we're in prerender/SSR/static build context (window is undefined)
+    this.isPrerender = typeof window === 'undefined';
+    if (!this.isPrerender) {
+      this.supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+    }
   }
 
   // PUBLIC_INTERFACE
   async fetchNotes(search: string = ''): Promise<any[]> {
+    if (this.isPrerender || !this.supabase) {
+      return [];
+    }
     let query = this.supabase.from('notes').select('*').order('updated_at', { ascending: false });
     if (search) {
       // Allow searching title or content
@@ -26,24 +34,36 @@ export class SupabaseService {
 
   // PUBLIC_INTERFACE
   async getNote(id: string): Promise<any> {
+    if (this.isPrerender || !this.supabase) {
+      return null;
+    }
     const { data } = await this.supabase.from('notes').select('*').eq('id', id).single();
     return data;
   }
 
   // PUBLIC_INTERFACE
   async createNote(note: { title: string; content: string }): Promise<any> {
+    if (this.isPrerender || !this.supabase) {
+      return null;
+    }
     const { data } = await this.supabase.from('notes').insert([note]).select().single();
     return data;
   }
 
   // PUBLIC_INTERFACE
   async updateNote(id: string, note: { title: string; content: string }): Promise<any> {
+    if (this.isPrerender || !this.supabase) {
+      return null;
+    }
     const { data } = await this.supabase.from('notes').update(note).eq('id', id).select().single();
     return data;
   }
 
   // PUBLIC_INTERFACE
   async deleteNote(id: string): Promise<boolean> {
+    if (this.isPrerender || !this.supabase) {
+      return false;
+    }
     const { error } = await this.supabase.from('notes').delete().eq('id', id);
     return !error;
   }

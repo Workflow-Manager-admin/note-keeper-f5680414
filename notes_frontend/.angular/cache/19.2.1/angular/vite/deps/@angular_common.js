@@ -1,4 +1,3 @@
-import { createRequire } from 'module';const require = createRequire(import.meta.url);
 import {
   APP_BASE_HREF,
   AsyncPipe,
@@ -95,11 +94,11 @@ import {
   provideNetlifyLoader,
   registerLocaleData,
   setRootDomAdapter
-} from "./chunk-T3VTM56J.js";
+} from "./chunk-GAIOVOVO.js";
 import {
   IMAGE_CONFIG
-} from "./chunk-ZZPQQHIW.js";
-import "./chunk-ANGF2IQY.js";
+} from "./chunk-4OLNQ3N6.js";
+import "./chunk-S35DAJRX.js";
 export {
   APP_BASE_HREF,
   AsyncPipe,

@@ -23,7 +23,11 @@ export class NotesComponent {
   private supabaseService = inject(SupabaseService);
 
   ngOnInit() {
-    this.refresh();
+    // During SSR prerendering, window is undefined and network requests can hang the build.
+    // Only fetch notes if running in browser (when window is defined).
+    if (typeof window !== 'undefined') {
+      this.refresh();
+    }
   }
 
   async refresh(search: string = '') {
