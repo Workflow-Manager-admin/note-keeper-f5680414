@@ -1,6 +1,3 @@
 import { Routes } from '@angular/router';
-import { NotesComponent } from './notes.component';
 
-export const routes: Routes = [
-  { path: '', component: NotesComponent },
-];
+export const routes: Routes = [];
