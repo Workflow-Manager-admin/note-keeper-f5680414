@@ -1,7 +1,7 @@
 <div class="note-editor-container">
   <form (ngSubmit)="onSave()" autocomplete="off">
     <div class="note-editor-controls">
-      <input class="note-title" [(ngModel)]="tmpTitle" name="title" maxlength="64" required placeholder="Title" [disabled]="editing === false && note && note.title"/>
+      <input class="note-title" [(ngModel)]="tmpTitle" name="title" maxlength="64" required placeholder="Title" [disabled]="editing && !note"/>
       <div class="icon-actions">
         <button *ngIf="editing" type="button" class="danger" (click)="onDelete()" aria-label="Delete note">Delete</button>
         <button type="submit" class="primary" [disabled]="tmpTitle.trim() === ''">
@@ -10,6 +10,6 @@
         <button type="button" class="secondary" (click)="onCancel()">Cancel</button>
       </div>
     </div>
-    <textarea class="note-content" [(ngModel)]="tmpContent" name="content" rows="17" placeholder="Take a note..." [disabled]="editing === false && note && note.content"></textarea>
+    <textarea class="note-content" [(ngModel)]="tmpContent" name="content" rows="17" placeholder="Take a note..." [disabled]="editing && !note"></textarea>
   </form>
 </div>
