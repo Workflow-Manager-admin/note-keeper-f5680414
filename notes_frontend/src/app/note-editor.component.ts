@@ -21,6 +21,7 @@ export class NoteEditorComponent {
 
   ngOnChanges() {
     // Set up tmpTitle/tmpContent whenever a note is selected.
+    // For new note, ensure fields are editable
     if (this.note) {
       this.tmpTitle = this.note.title;
       this.tmpContent = this.note.content;
@@ -30,14 +31,22 @@ export class NoteEditorComponent {
     }
   }
 
+  get isFormEditable(): boolean {
+    // Form is editable when creating a note (editing is false), or editing an existing note (editing is true)
+    return (this.editing === false) || (this.editing === true);
+  }
+
+  // PUBLIC_INTERFACE
   onSave() {
     if (this.tmpTitle.trim() !== '') {
       this.save.emit({ title: this.tmpTitle.trim(), content: this.tmpContent.trim() });
     }
   }
+  // PUBLIC_INTERFACE
   onCancel() {
     this.cancel.emit();
   }
+  // PUBLIC_INTERFACE
   onDelete() {
     this.delete.emit();
   }
